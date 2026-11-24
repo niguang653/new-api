@@ -12,6 +12,9 @@
 
   /* ---------- 最小适配层：替代 React 的 useRef / useEffect 与 jsx 运行时 ---------- */
   var canvas = null;
+  // 暴露给外部的 frame 控制句柄（不拦截全局 rAF）
+  global.__fluidRafId = null;
+  global.__fluidFrameFn = null;
   var jsxRuntime = {
     jsx: function (type, props) { return { type: type, props: props }; },
     jsxs: function (type, props) { return { type: type, props: props }; },
@@ -25,11 +28,44 @@
       };
     },
     useEffect: function (fn) {
-      // 原站组件在 useEffect 里初始化整个 WebGL 管线，这里直接执行
-      try { var cleanup = fn(); if (typeof cleanup === "function") window.__fluidCleanup = cleanup; }
-      catch (err) { console.error("[fluid-hero] 初始化失败:", err); }
+      // 原站组件在 useEffect 里初始化整个 WebGL 管线并启动 rAF 循环
+      // 我们拦截 requestAnimationFrame 一次，以便拿到 frame 函数引用
+      var origRAF = window.requestAnimationFrame;
+      window.requestAnimationFrame = function (cb) {
+        global.__fluidFrameFn = cb;
+        var id = origRAF.call(window, cb);
+        global.__fluidRafId = id;
+        // 第一次调用后立即还原
+        window.requestAnimationFrame = origRAF;
+        return id;
+      };
+      try {
+        var cleanup = fn();
+        if (typeof cleanup === "function") {
+          // 包装 cleanup：还原 rAF 并清除句柄
+          window.__fluidCleanup = function () {
+            cleanup();
+            global.__fluidRafId = null;
+            global.__fluidFrameFn = null;
+          };
+        }
+      } catch (err) {
+        console.error("[fluid-hero] 初始化失败:", err);
+        window.requestAnimationFrame = origRAF;
+      }
     },
   };
+  function __fluidStart() {
+    if (!global.__fluidRafId && global.__fluidFrameFn) {
+      global.__fluidRafId = requestAnimationFrame(global.__fluidFrameFn);
+    }
+  }
+  function __fluidStop() {
+    if (global.__fluidRafId) {
+      cancelAnimationFrame(global.__fluidRafId);
+      global.__fluidRafId = null;
+    }
+  }
   function requireShim(id) {
     if (id === 12907) return ReactShim;   // react
     if (id === 19899) return jsxRuntime;  // react/jsx-runtime
@@ -594,7 +630,18 @@ const __fluidModule = (e, t, r) => {
     __fluidModule({}, exportsObj, requireShim);
     var Comp = exportsObj.default;
     Comp(options); // 触发组件函数 -> 适配层立即执行 useEffect
-    return { host: host, canvas: canvas, destroy: function () { if (window.__fluidCleanup) window.__fluidCleanup(); host.remove(); } };
+    return {
+      host: host,
+      canvas: canvas,
+      destroy: function () {
+        __fluidStop();
+        if (window.__fluidCleanup) window.__fluidCleanup();
+        host.remove();
+        canvas = null;
+      },
+      start: __fluidStart,
+      stop: __fluidStop,
+    };
   }
 
   global.mountFluid = mountFluid;

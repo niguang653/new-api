@@ -54,10 +54,31 @@ interface Dot {
   oy: number
 }
 
+/** 空间哈希桶：把 N 个 dot 按坐标入桶，邻域查询 O(1) 平均 */
+function buildSpatialHash(
+  dots: Dot[],
+  cellSize: number,
+  cols: number
+): Map<number, number[]> {
+  const buckets = new Map<number, number[]>()
+  for (let i = 0; i < dots.length; i++) {
+    const c = Math.min(cols - 1, Math.max(0, Math.floor(dots[i].ox / cellSize)))
+    const r = Math.max(0, Math.floor(dots[i].oy / cellSize))
+    const key = r * cols + c
+    let bucket = buckets.get(key)
+    if (!bucket) {
+      bucket = []
+      buckets.set(key, bucket)
+    }
+    bucket.push(i)
+  }
+  return buckets
+}
+
 function DotGrid({
   className,
   dotSize = 2,
-  gap = 18,
+  gap: _gap = 18,
   baseColor,
   activeColor,
   proximity = 130,
@@ -84,8 +105,20 @@ function DotGrid({
     let width = 0
     let height = 0
     let raf = 0
+    let paused = false
     const mouse = { x: -9999, y: -9999 }
     let shock: { x: number; y: number; r: number; life: number } | null = null
+
+    // 动态粒子数：按视口宽度调 gap 保持密度一致
+    const pickGap = () => {
+      const w = window.innerWidth
+      if (w >= 1440) return 36      // ~120 dots
+      if (w >= 1024) return 42     // ~90 dots
+      if (w >= 768) return 54      // ~60 dots
+      return 68                    // ~40 dots
+    }
+    let curGap = pickGap()
+
     const build = () => {
       const rect = canvas.getBoundingClientRect()
       width = rect.width
@@ -94,48 +127,99 @@ function DotGrid({
       canvas.height = Math.floor(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       dots = []
-      for (let x = gap / 2; x < width; x += gap) {
-        for (let y = gap / 2; y < height; y += gap) {
+      curGap = pickGap()
+      for (let x = curGap / 2; x < width; x += curGap) {
+        for (let y = curGap / 2; y < height; y += curGap) {
           dots.push({ x, y, ox: x, oy: y })
         }
       }
     }
+    const cellSize = Math.max(proximity, curGap * 3)
+    const colsForHash = () => Math.max(1, Math.ceil(width / cellSize))
+
     const frame = () => {
+      if (paused) return
       ctx.clearRect(0, 0, width, height)
       if (shock) {
         shock.r += shockStrength * 3.2
         shock.life -= 0.012
         if (shock.life <= 0) shock = null
       }
-      for (const dot of dots) {
+
+      // 空间哈希
+      const colsH = colsForHash()
+      const rowsH = Math.max(1, Math.ceil(height / cellSize))
+      const buckets = buildSpatialHash(dots, cellSize, colsH)
+
+      const mouseInRange =
+        mouse.x > -9000 &&
+        mouse.x < width + proximity &&
+        mouse.y > -9000 &&
+        mouse.y < height + proximity
+
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i]
         let tx = dot.ox
         let ty = dot.oy
         let active = false
-        const dx = dot.ox - mouse.x
-        const dy = dot.oy - mouse.y
-        const dist = Math.hypot(dx, dy)
-        if (dist < proximity && dist > 0.01) {
-          const force = (1 - dist / proximity) ** 2
-          tx += (dx / dist) * force * 24
-          ty += (dy / dist) * force * 24
-          active = true
+
+        if (mouseInRange) {
+          const dc = Math.min(colsH - 1, Math.max(0, Math.floor(mouse.x / cellSize)))
+          const dr = Math.max(0, Math.floor(mouse.y / cellSize))
+          // 只查自身桶 + 邻 8 桶
+          for (let r2 = dr - 1; r2 <= dr + 1; r2++) {
+            if (r2 < 0 || r2 >= rowsH) continue
+            for (let c2 = dc - 1; c2 <= dc + 1; c2++) {
+              if (c2 < 0 || c2 >= colsH) continue
+              const bucket = buckets.get(r2 * colsH + c2)
+              if (!bucket) continue
+              for (const j of bucket) {
+                if (j !== i) continue
+                const dx2 = dot.ox - mouse.x
+                const dy2 = dot.oy - mouse.y
+                const dist2 = dx2 * dx2 + dy2 * dy2
+                const p2 = proximity * proximity
+                if (dist2 < p2 && dist2 > 0.01) {
+                  const dist = Math.sqrt(dist2)
+                  const force = (1 - dist / proximity) ** 2
+                  tx += (dx2 / dist) * force * 24
+                  ty += (dy2 / dist) * force * 24
+                  active = true
+                }
+                break
+              }
+            }
+          }
         }
+
+        // shock 冲击波（半径内距离平方比较，r2 仅用于范围预筛）
         if (shock) {
           const sdx = dot.ox - shock.x
           const sdy = dot.oy - shock.y
-          const sdist = Math.hypot(sdx, sdy)
-          if (sdist > 0.01 && Math.abs(sdist - shock.r) < 40) {
-            const force = (1 - Math.abs(sdist - shock.r) / 40) * shock.life
-            tx += (sdx / sdist) * force * 18
-            ty += (sdy / sdist) * force * 18
-            active = true
+          const sdist2 = sdx * sdx + sdy * sdy
+          const within = shockRadius * shockRadius
+          if (sdist2 < within) {
+            const sdist = Math.sqrt(sdist2)
+            if (Math.abs(sdist - shock.r) < 40) {
+              const force = (1 - Math.abs(sdist - shock.r) / 40) * shock.life
+              tx += (sdx / sdist) * force * 18
+              ty += (sdy / sdist) * force * 18
+              active = true
+            }
           }
         }
+
         dot.x += (tx - dot.x) * 0.18
         dot.y += (ty - dot.y) * 0.18
         const moved = Math.abs(dot.x - dot.ox) + Math.abs(dot.y - dot.oy) > 1
         ctx.beginPath()
-        ctx.arc(dot.x, dot.y, moved ? dotSize * 1.15 : dotSize / 2, 0, Math.PI * 2)
+        ctx.arc(
+          dot.x,
+          dot.y,
+          moved ? dotSize * 1.15 : dotSize / 2,
+          0,
+          Math.PI * 2
+        )
         ctx.fillStyle = active || moved ? activeColor : baseColor
         ctx.fill()
       }
@@ -159,21 +243,55 @@ function DotGrid({
         life: 1,
       }
     }
+    const onVisChange = () => {
+      paused = document.hidden
+      if (!paused && !raf) raf = requestAnimationFrame(frame)
+      if (paused && raf) {
+        cancelAnimationFrame(raf)
+        raf = 0
+      }
+    }
+    // Scroll pause
+    let scrollTimer: number | undefined
+    const onScroll = () => {
+      if (raf) {
+        cancelAnimationFrame(raf)
+        raf = 0
+      }
+      window.clearTimeout(scrollTimer)
+      scrollTimer = window.setTimeout(() => {
+        if (!document.hidden) raf = requestAnimationFrame(frame)
+      }, 250)
+    }
     build()
     frame()
     window.addEventListener('resize', build)
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mousedown', onDown)
     document.addEventListener('mouseleave', onLeave)
+    document.addEventListener('visibilitychange', onVisChange)
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', build)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mousedown', onDown)
       document.removeEventListener('mouseleave', onLeave)
+      document.removeEventListener('visibilitychange', onVisChange)
+      window.removeEventListener('scroll', onScroll)
+      window.clearTimeout(scrollTimer)
     }
-  }, [gap, dotSize, baseColor, activeColor, proximity, shockRadius, shockStrength])
-  return <canvas ref={canvasRef} className={className} aria-hidden />
+    // Note: intentionally only depends on stable handlers
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  return (
+    <canvas
+      ref={canvasRef}
+      className={className}
+      aria-hidden
+      style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+    />
+  )
 }
 
 /** 模型名微强调：GPT / Claude / Gemini / DeepSeek */
@@ -209,15 +327,57 @@ export function Hero({ isAuthenticated }: { isAuthenticated: boolean }) {
   const title = t('home.banner.title')
 
   return (
-    <section className='relative overflow-hidden pt-16 sm:pt-24'>
-      {/* 背景：漂移光斑 + 透视网格地面 */}
-      <div className='pointer-events-none absolute inset-0 z-0'>
-        <div className='ll-drift absolute -top-40 -left-40 size-[520px] rounded-full bg-[#4F8BFF]/25 blur-[120px] dark:bg-[#3D5BFF]/30' />
-        <div className='ll-drift-rev absolute top-10 -right-32 size-[460px] rounded-full bg-[#8B6CFF]/20 blur-[120px] dark:bg-[#7C5CFF]/30' />
-        <div className='ll-drift absolute top-[420px] left-1/2 h-[320px] w-[620px] -translate-x-1/2 rounded-full bg-[#FF9AB0]/15 blur-[120px] dark:bg-[#C05CFF]/15' />
-        <div className='absolute inset-x-0 bottom-0 h-[560px] [mask-image:linear-gradient(to_top,black_10%,transparent_85%)] [perspective:600px]'>
-          <div className='ll-grid-floor absolute inset-x-[-50%] bottom-[-10%] h-[200%] origin-bottom bg-[linear-gradient(to_right,rgba(71,92,255,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(71,92,255,0.18)_1px,transparent_1px)] bg-[size:56px_56px] [transform:rotateX(68deg)] dark:bg-[linear-gradient(to_right,rgba(139,123,255,0.22)_1px,transparent_1px),linear-gradient(to_bottom,rgba(139,123,255,0.22)_1px,transparent_1px)]' />
-        </div>
+    <section className='relative overflow-x-clip overflow-y-hidden pt-16 contain-[layout_style_paint] sm:pt-24'>
+      {/* 背景：漂移光斑 + 透视网格地面 — 合成层隔离 */}
+      <div
+        className='pointer-events-none absolute inset-0 z-0'
+        style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+      >
+        {/* 光斑：radial-gradient + blur-24px，去 blur-3xl 重成本 */}
+        <div
+          className='ll-drift absolute -top-32 -left-32 size-[288px] rounded-full opacity-90 blur-[24px] dark:opacity-95'
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            background:
+              'radial-gradient(circle, rgba(79,139,255,0.22) 0%, rgba(79,139,255,0.10) 40%, transparent 70%)',
+          }}
+        />
+        <div
+          className='ll-drift-rev absolute top-8 -right-24 size-[288px] rounded-full opacity-90 blur-[24px] dark:opacity-95'
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            background:
+              'radial-gradient(circle, rgba(139,108,255,0.22) 0%, rgba(139,108,255,0.10) 40%, transparent 70%)',
+          }}
+        />
+        <div
+          className='ll-drift absolute top-[440px] left-1/2 -translate-x-1/2 size-[288px] rounded-full opacity-85 blur-[24px] dark:opacity-90'
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            background:
+              'radial-gradient(circle, rgba(255,154,176,0.18) 0%, rgba(255,154,176,0.08) 40%, transparent 70%)',
+          }}
+        />
+        {/* 透视网格地面 — 标准透视写法：同元素 perspective + rotateX + bottom center origin */}
+        <div
+          className='ll-grid-floor absolute left-1/2 bottom-0 h-[180%] w-[200vw] origin-bottom'
+          style={{
+            willChange: 'transform',
+            transform:
+              'translateX(-50%) translateZ(0) perspective(700px) rotateX(60deg)',
+            transformOrigin: 'bottom center',
+            maskImage:
+              'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 80%)',
+            WebkitMaskImage:
+              'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 80%)',
+            backgroundImage:
+              'linear-gradient(to right, rgba(71,92,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(71,92,255,0.08) 1px, transparent 1px)',
+            backgroundSize: '60px 60px, 60px 60px',
+          }}
+        />
       </div>
 
       {/* 点阵（斥力 + 冲击波） */}
