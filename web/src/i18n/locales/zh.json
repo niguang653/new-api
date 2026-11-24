@@ -2958,7 +2958,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "相关项目",
     "footer.defaultCopyright": "版权所有。",
-    "footer.new\u0061pi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
+    "footer.newapi.projectAttributionSuffix": "版权所有，由项目贡献者设计与开发。",
     "For a stronger password": "让密码更强",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "高级自定义渠道仅对 /v1/responses 且不做协议转换的路由生效。",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "对于 2025 年 5 月 10 日之后添加的渠道，在部署时无需从模型名称中移除 \".\"",
@@ -3204,6 +3204,77 @@
     "Hour of day": "小时",
     "Hourly token usage by model across the last 24 hours": "过去 24 小时内各模型的逐小时 Token 用量",
     "Hourly token usage by model over the past 24 hours": "过去 24 小时内按模型分布的小时级 Token 使用量",
+    "home": {
+      "hero": {
+        "badge": "一个 OpenAI 兼容的 Key，即可调用",
+        "words": "千问, GPT-5, Claude, Gemini, DeepSeek, Grok",
+        "subtitle": "统一接入 GPT、Claude、Gemini、DeepSeek 等模型。一个端点，透明计费，按 token 付费。"
+      },
+      "cta": {
+        "title": "几分钟内开始构建",
+        "subtitle": "注册账号，获取 API Key，发起你的第一次请求。"
+      },
+      "notice": {
+        "close": "关闭公告"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "一个 API 接入主流 AI 模型",
+        "description": "把 GPT、Claude、Gemini、DeepSeek 等主流模型收敛到一个端点。统一鉴权、统一计费、按量结算，不用再为每个厂商单独对接。",
+        "primaryCta": "立即开始",
+        "secondaryCta": "浏览模型",
+        "stats": {
+          "users": "服务团队与开发者",
+          "tokens": "日均处理 Tokens",
+          "tokensValue": "1000亿+",
+          "models": "已接入模型",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "领先模型服务商，一个接口全接入"
+      },
+      "chooseUs": {
+        "eyebrow": "为什么选择我们",
+        "title": "面向生产流量的模型接入基础设施",
+        "cards": {
+          "singleApi": {
+            "title": "统一标准接口",
+            "description": "兼容 OpenAI Chat / Responses、Anthropic Messages，以及生图、视频、音频异步任务接口 /v1/predictions，一套密钥与统一的 SDK 模式。"
+          },
+          "security": {
+            "title": "密钥隔离与权限控制",
+            "description": "支持按密钥设置额度上限、过期时间与可用分组，链路全程加密传输，并提供完整 request_id 调用日志。"
+          },
+          "globalEdge": {
+            "title": "多节点加速直连",
+            "description": "通过多区域接入节点转发上游请求，降低跨网抖动与首字延迟，保障流式输出稳定。"
+          },
+          "latency": {
+            "title": "清晰计费与企业结算",
+            "description": "按模型、分组与实际调用逐笔核算费用；支持在线充值，也支持企业对公转账、签订正式合同与开具增值税发票。"
+          },
+          "failover": {
+            "title": "多线路自动容灾",
+            "description": "同一模型背后可绑定多条上游通道；主线路出现波动或维护时自动切换备用路由，避免单点故障中断线上业务。"
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI 兼容协议",
+          "models": "200+ 主流模型",
+          "failover": "多线路智能容灾",
+          "metered": "逐笔用量核算"
+        },
+        "descriptions": {
+          "openaiCompat": "一套接口，直连全部模型",
+          "models": "文本 · 图像 · 视频 · 音频",
+          "failover": "自动切换，请求不中断",
+          "metered": "按 Token 计费，账目可查"
+        }
+      }
+    },
     "hours": "小时",
     "How a call is priced": "一次调用如何计价",
     "How a session is identified and which channel it keeps.": "定义如何识别会话及其使用的渠道。",

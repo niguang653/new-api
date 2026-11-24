@@ -2958,7 +2958,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "Related Projects",
     "footer.defaultCopyright": "All rights reserved.",
-    "footer.new\u0061pi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
+    "footer.newapi.projectAttributionSuffix": "All rights reserved. Designed and developed by the project contributors.",
     "For a stronger password": "For a stronger password",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment",
@@ -3204,6 +3204,77 @@
     "Hour of day": "Hour of day",
     "Hourly token usage by model across the last 24 hours": "Hourly token usage by model across the last 24 hours",
     "Hourly token usage by model over the past 24 hours": "Hourly token usage by model over the past 24 hours",
+    "home": {
+      "hero": {
+        "badge": "One OpenAI-compatible key for",
+        "words": "GPT-5, Claude, Gemini, DeepSeek, Qwen, Grok",
+        "subtitle": "Unified access to GPT, Claude, Gemini, DeepSeek and more. One endpoint, transparent billing, pay per token."
+      },
+      "cta": {
+        "title": "Start building in minutes",
+        "subtitle": "Create an account, grab an API key, and make your first request."
+      },
+      "notice": {
+        "close": "Dismiss notice"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "One API for Every AI Model",
+        "description": "Bring GPT, Claude, Gemini and DeepSeek under one endpoint. Unified auth, unified billing, pay only for what you use.",
+        "primaryCta": "Get Started",
+        "secondaryCta": "Browse Models",
+        "stats": {
+          "users": "Teams & developers",
+          "tokens": "Tokens processed daily",
+          "tokensValue": "100B+",
+          "models": "Models available",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "Leading model providers, one endpoint"
+      },
+      "chooseUs": {
+        "eyebrow": "Why choose us",
+        "title": "Model access infrastructure built for production traffic",
+        "cards": {
+          "singleApi": {
+            "title": "Unified standard API",
+            "description": "Compatible with OpenAI Chat / Responses, Anthropic Messages, and async image, video and audio endpoints (/v1/predictions) — one key, one SDK."
+          },
+          "security": {
+            "title": "Key isolation & access control",
+            "description": "Set quota limits, expiry and allowed groups per key. Traffic is encrypted in transit and every call keeps a full request_id log."
+          },
+          "globalEdge": {
+            "title": "Multi-node accelerated routing",
+            "description": "Relay upstream requests through multi-region ingress nodes to cut jitter and time-to-first-token, keeping streams stable."
+          },
+          "latency": {
+            "title": "Transparent billing & enterprise settlement",
+            "description": "Metering by model, group and actual call. Top up online, or settle with corporate transfer, contracts and VAT invoices."
+          },
+          "failover": {
+            "title": "Automatic multi-line failover",
+            "description": "Bind several upstream channels behind one model. When the primary route degrades, traffic fails over to a backup automatically."
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI-COMPATIBLE",
+          "models": "200+ MODELS",
+          "failover": "SMART FAILOVER",
+          "metered": "PER-TOKEN BILLING"
+        },
+        "descriptions": {
+          "openaiCompat": "One endpoint for every upstream",
+          "models": "Text · Image · Video · Audio",
+          "failover": "Auto-switch, zero downtime",
+          "metered": "Granular, auditable logs"
+        }
+      }
+    },
     "hours": "hours",
     "How a call is priced": "How a call is priced",
     "How a session is identified and which channel it keeps.": "How a session is identified and which channel it keeps.",

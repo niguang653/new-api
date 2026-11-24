@@ -2958,7 +2958,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "Projets liés",
     "footer.defaultCopyright": "Tous droits réservés.",
-    "footer.new\u0061pi.projectAttributionSuffix": "Tous droits réservés. Conçu et développé par les contributeurs du projet.",
+    "footer.newapi.projectAttributionSuffix": "Tous droits réservés. Conçu et développé par les contributeurs du projet.",
     "For a stronger password": "Pour un mot de passe plus robuste",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "Pour les canaux personnalisés avancés, ceci ne s’applique qu’aux routes /v1/responses sans conversion de protocole.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "Pour les canaux ajoutés après le 10 mai 2025, pas besoin de supprimer \".\" des noms de modèles lors du déploiement",
@@ -7750,6 +7750,68 @@
     "Zhipu V4": "Zhipu V4",
     "Zoom": "Zoom",
     "By clicking sign in, you agree to our": "En cliquant sur se connecter, vous acceptez nos",
-    "By creating an account, you agree to our": "En créant un compte, vous acceptez nos"
+    "By creating an account, you agree to our": "En créant un compte, vous acceptez nos",
+    "home": {
+      "notice": {
+        "close": "Fermer l'annonce"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "Une API pour tous les modèles IA",
+        "description": "Rassemblez GPT, Claude, Gemini et DeepSeek sous un seul endpoint. Auth unifiée, facturation unifiée, payez uniquement ce que vous utilisez.",
+        "primaryCta": "Commencer",
+        "secondaryCta": "Voir les modèles",
+        "stats": {
+          "users": "Équipes et développeurs",
+          "tokens": "Tokens traités par jour",
+          "tokensValue": "100 Mrd+",
+          "models": "Modèles disponibles",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "Les grands fournisseurs de modèles, un seul point d’accès"
+      },
+      "chooseUs": {
+        "eyebrow": "Pourquoi nous choisir",
+        "title": "Une infrastructure d’accès aux modèles conçue pour le trafic de production",
+        "cards": {
+          "singleApi": {
+            "title": "API standard unifiée",
+            "description": "Compatible avec OpenAI Chat / Responses, Anthropic Messages et les points de terminaison asynchrones image, vidéo et audio (/v1/predictions) — une clé, un SDK."
+          },
+          "security": {
+            "title": "Isolation des clés et contrôle d’accès",
+            "description": "Plafond de quota, expiration et groupes autorisés par clé. Trafic chiffré de bout en bout et journal complet par request_id."
+          },
+          "globalEdge": {
+            "title": "Routage accéléré multi-nœuds",
+            "description": "Relais des requêtes via des nœuds d’entrée multi-régions pour réduire la gigue et le délai du premier token."
+          },
+          "latency": {
+            "title": "Facturation transparente et règlement entreprise",
+            "description": "Comptage par modèle, par groupe et par appel. Rechargement en ligne ou virement d’entreprise avec contrats et factures."
+          },
+          "failover": {
+            "title": "Basculement automatique multi-lignes",
+            "description": "Plusieurs canaux amont derrière un même modèle ; en cas de dégradation, le trafic bascule automatiquement vers une route de secours."
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI-COMPATIBLE",
+          "models": "200+ MODÈLES",
+          "failover": "FAILOVER INTELLIGENT",
+          "metered": "FACTURATION AU TOKEN"
+        },
+        "descriptions": {
+          "openaiCompat": "Un endpoint pour chaque upstream",
+          "models": "Texte · Image · Vidéo · Audio",
+          "failover": "Basculement auto, zéro panne",
+          "metered": "Granulaire, journaux auditable"
+        }
+      }
+    }
   }
 }

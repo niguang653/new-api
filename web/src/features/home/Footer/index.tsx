@@ -16,8 +16,16 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-export { CTA } from './sections/cta'
-export { Features } from './sections/features'
-export { Hero } from './sections/hero'
-export { HowItWorks } from './sections/how-it-works'
-export { Stats } from './sections/stats'
+import { Footer as BaseFooter } from '@/components/layout/components/footer'
+
+/**
+ * 首页页脚：复用站内 Footer，仅补一条顶部分隔渐变以衔接新暗色主题。
+ */
+export function Footer() {
+  return (
+    <div className='relative bg-gray-50 dark:bg-[#101828]'>
+      <div className='pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#7C6BFF]/40 to-transparent' />
+      <BaseFooter />
+    </div>
+  )
+}

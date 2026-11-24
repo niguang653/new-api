@@ -2958,7 +2958,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "相關項目",
     "footer.defaultCopyright": "版權所有。",
-    "footer.new\u0061pi.projectAttributionSuffix": "版權所有，由項目貢獻者設計與開發。",
+    "footer.newapi.projectAttributionSuffix": "版權所有，由項目貢獻者設計與開發。",
     "For a stronger password": "讓密碼更強",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "進階自訂渠道僅對 /v1/responses 且不做協定轉換的路由生效。",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "對於 2025 年 5 月 10 日之後新增的渠道，在部署時無需從模型名稱中移除 \".\"",
@@ -7750,6 +7750,68 @@
     "Zhipu V4": "智譜 V4",
     "Zoom": "縮放",
     "By clicking sign in, you agree to our": "點擊登入即表示您同意我們的",
-    "By creating an account, you agree to our": "建立帳戶即表示您同意我們的"
+    "By creating an account, you agree to our": "建立帳戶即表示您同意我們的",
+    "home": {
+      "notice": {
+        "close": "關閉公告"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "一個 API 接入主流 AI 模型",
+        "description": "把 GPT、Claude、Gemini、DeepSeek 等主流模型收斂到一個端點。統一鑑權、統一計費、按量結算，不用再為每個廠商單獨對接。",
+        "primaryCta": "立即開始",
+        "secondaryCta": "瀏覽模型",
+        "stats": {
+          "users": "服務團隊與開發者",
+          "tokens": "日均處理 Tokens",
+          "tokensValue": "1000億+",
+          "models": "已接入模型",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "領先模型服務商，一個介面全接入"
+      },
+      "chooseUs": {
+        "eyebrow": "為什麼選擇我們",
+        "title": "面向生產流量的模型接入基礎設施",
+        "cards": {
+          "singleApi": {
+            "title": "統一標準介面",
+            "description": "相容 OpenAI Chat / Responses、Anthropic Messages，以及生圖、影片、音訊非同步任務介面 /v1/predictions，一套密鑰與統一的 SDK 模式。"
+          },
+          "security": {
+            "title": "密鑰隔離與權限控制",
+            "description": "支援按密鑰設定額度上限、到期時間與可用分組，鏈路全程加密傳輸，並提供完整 request_id 呼叫日誌。"
+          },
+          "globalEdge": {
+            "title": "多節點加速直連",
+            "description": "透過多區域接入節點轉發上游請求，降低跨網抖動與首字延遲，保障串流輸出穩定。"
+          },
+          "latency": {
+            "title": "清晰計費與企業結算",
+            "description": "按模型、分組與實際呼叫逐筆核算費用；支援線上儲值，也支援企業對公轉帳、簽訂正式合約與開立統一發票。"
+          },
+          "failover": {
+            "title": "多線路自動容災",
+            "description": "同一模型背後可綁定多條上游通道；主線路出現波動或維護時自動切換備用路由，避免單點故障中斷線上業務。"
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI 相容協定",
+          "models": "200+ 主流模型",
+          "failover": "多線路智能容災",
+          "metered": "逐筆用量核算"
+        },
+        "descriptions": {
+          "openaiCompat": "一套介面，直連全部模型",
+          "models": "文字 · 圖像 · 影片 · 音訊",
+          "failover": "自動切換，請求不中斷",
+          "metered": "按 Token 計費，帳目可查"
+        }
+      }
+    }
   }
 }

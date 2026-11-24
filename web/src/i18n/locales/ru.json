@@ -2958,7 +2958,7 @@
     "footer.columns.related.links.oneApi": "Один API",
     "footer.columns.related.title": "Связанные проекты",
     "footer.defaultCopyright": "Все права защищены.",
-    "footer.new\u0061pi.projectAttributionSuffix": "Все права защищены. Разработано участниками проекта.",
+    "footer.newapi.projectAttributionSuffix": "Все права защищены. Разработано участниками проекта.",
     "For a stronger password": "Чтобы сделать пароль надёжнее",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "Для расширенных пользовательских каналов это действует только для маршрутов /v1/responses без преобразования протокола.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "Для каналов, добавленных после 10 мая 2025 г., не нужно удалять \".\" из имён моделей при развёртывании",
@@ -7750,6 +7750,68 @@
     "Zhipu V4": "Zhipu V4",
     "Zoom": "Zoom",
     "By clicking sign in, you agree to our": "Нажимая «Войти», вы соглашаетесь с нашими",
-    "By creating an account, you agree to our": "Создавая аккаунт, вы соглашаетесь с нашими"
+    "By creating an account, you agree to our": "Создавая аккаунт, вы соглашаетесь с нашими",
+    "home": {
+      "notice": {
+        "close": "Закрыть объявление"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "Одна API для всех AI-моделей",
+        "description": "GPT, Claude, Gemini и DeepSeek — под одним endpoint. Единый auth, единый биллинг, оплачиваете только то, что используете.",
+        "primaryCta": "Начать",
+        "secondaryCta": "Смотреть модели",
+        "stats": {
+          "users": "Команды и разработчики",
+          "tokens": "Tokens в сутки",
+          "tokensValue": "100 млрд+",
+          "models": "Доступно моделей",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "Ведущие поставщики моделей — один эндпоинт"
+      },
+      "chooseUs": {
+        "eyebrow": "Почему мы",
+        "title": "Инфраструктура доступа к моделям для продакшн-нагрузок",
+        "cards": {
+          "singleApi": {
+            "title": "Единый стандартный API",
+            "description": "Совместим с OpenAI Chat / Responses, Anthropic Messages и асинхронными эндпоинтами изображений, видео и аудио (/v1/predictions) — один ключ и один SDK."
+          },
+          "security": {
+            "title": "Изоляция ключей и контроль доступа",
+            "description": "Лимит квоты, срок действия и разрешённые группы для каждого ключа. Шифрование трафика и полный журнал вызовов по request_id."
+          },
+          "globalEdge": {
+            "title": "Ускоренная маршрутизация через несколько узлов",
+            "description": "Передача запросов через узлы в нескольких регионах снижает джиттер и задержку первого токена."
+          },
+          "latency": {
+            "title": "Прозрачная тарификация и корпоративные расчёты",
+            "description": "Учёт по модели, группе и каждому вызову. Пополнение онлайн или банковский перевод с договором и счётом."
+          },
+          "failover": {
+            "title": "Автоматическое переключение каналов",
+            "description": "Несколько вышестоящих каналов за одной моделью: при деградации основного трафик автоматически уходит на резервный."
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI-СОВМЕСТИМО",
+          "models": "200+ МОДЕЛЕЙ",
+          "failover": "УМНЫЙ FAILOVER",
+          "metered": "ОПЛАТА ЗА TOKEN"
+        },
+        "descriptions": {
+          "openaiCompat": "Одна точка входа для всех источников",
+          "models": "Текст · Изображение · Видео · Аудио",
+          "failover": "Автопереключение, ноль простоев",
+          "metered": "Гранулярно, журналы доступны"
+        }
+      }
+    }
   }
 }
