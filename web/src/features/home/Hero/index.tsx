@@ -20,6 +20,7 @@ import { Link } from '@tanstack/react-router'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useIsMobile } from '@/hooks/use-mobile'
 import { useTheme } from '@/context/theme-provider'
 import { Terminal } from './Terminal'
 import { Stats } from '../Stats'
@@ -321,7 +322,8 @@ export function Hero({ isAuthenticated }: { isAuthenticated: boolean }) {
   const { t } = useTranslation()
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const isMobile = useIsMobile()
+  const reduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   const typedTitle = useTypewriter(t('home.banner.title'), !reduced)
   const title = t('home.banner.title')
@@ -361,23 +363,25 @@ export function Hero({ isAuthenticated }: { isAuthenticated: boolean }) {
               'radial-gradient(circle, rgba(255,154,176,0.18) 0%, rgba(255,154,176,0.08) 40%, transparent 70%)',
           }}
         />
-        {/* 透视网格地面 — 标准透视写法：同元素 perspective + rotateX + bottom center origin */}
-        <div
-          className='ll-grid-floor absolute left-1/2 bottom-0 h-[180%] w-[200vw] origin-bottom'
-          style={{
-            willChange: 'transform',
-            transform:
-              'translateX(-50%) translateZ(0) perspective(700px) rotateX(60deg)',
-            transformOrigin: 'bottom center',
-            maskImage:
-              'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 80%)',
-            WebkitMaskImage:
-              'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 40%, transparent 80%)',
-            backgroundImage:
-              'linear-gradient(to right, rgba(71,92,255,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(71,92,255,0.08) 1px, transparent 1px)',
-            backgroundSize: '60px 60px, 60px 60px',
-          }}
-        />
+        {/* 透视网格地面 — 桌面端渲染（移动端彻底关闭）
+            参数：间距 32px、线条 alpha 0.035（隐约可见）、mask 远端快速渐隐 */}
+        {!isMobile && (
+          <div
+            className='ll-grid-floor absolute left-1/2 bottom-0 h-[180%] w-[200vw] origin-bottom'
+            style={{
+              willChange: 'transform',
+              transform:
+                'translateX(-50%) translateZ(0) perspective(700px) rotateX(60deg)',
+              transformOrigin: 'bottom center',
+              maskImage:
+                'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 20%, transparent 60%)',
+              WebkitMaskImage:
+                'linear-gradient(to top, #000 0%, rgba(0,0,0,0.7) 20%, transparent 60%)',
+              backgroundImage: `linear-gradient(to right, rgba(71,92,255,${isDark ? 0.045 : 0.035}) 1px, transparent 1px), linear-gradient(to bottom, rgba(71,92,255,${isDark ? 0.045 : 0.035}) 1px, transparent 1px)`,
+              backgroundSize: '32px 32px, 32px 32px',
+            }}
+          />
+        )}
       </div>
 
       {/* 点阵（斥力 + 冲击波） */}

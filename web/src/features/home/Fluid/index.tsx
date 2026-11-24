@@ -82,12 +82,17 @@ function tierToOptions(tier: 'high' | 'low'): FluidMountOptions {
 
 /**
  * 全屏 WebGL 流体鼠标拖尾（SplashCursor）。
- * 脚本位于 /fluid-hero.js，按需注入一次；无 WebGL2 或用户偏好减弱动效时跳过。
+ * 脚本位于 /fluid-hero.js，按需注入一次；无 WebGL2 / prefers-reduced-motion / 移动端 时彻底跳过。
+ * 移动端完全不 mount：不注入 script、不创建 canvas、不启动 rAF。
  */
 export function FluidOverlay() {
   const instanceRef = useRef<FluidInstance | null>(null)
+  // ⚠ 不可以在 hooks 前 return early（会导致 Rendered fewer hooks than expected）
+  // 移动端拦截在父组件 Home 里用 {!isMobile && <FluidOverlay />} 完成
 
   useEffect(() => {
+    // 同步 matchMedia（浏览器环境立即生效，覆盖 SSR fallback=false 的 timing gap）
+    if (window.matchMedia('(max-width: 767px)').matches) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const probe = document.createElement('canvas')
     if (!probe.getContext('webgl2')) return
