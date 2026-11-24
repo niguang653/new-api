@@ -99,6 +99,10 @@ export function PublicHeader(props: PublicHeaderProps) {
   const displaySiteName = customSiteName || systemName
   const links = dynamicLinks.length > 0 ? dynamicLinks : navLinks
 
+  // 首页专属：未登录态下，透明 → 滚动后毛玻璃渐变；登录态保持原样
+  const isHomePage = pathname === '/'
+  const homeHeroHeader = isHomePage && !isAuthenticated
+
   let logoContent: ReactNode = (
     <HeaderLogo
       src={systemLogo}
@@ -203,15 +207,23 @@ export function PublicHeader(props: PublicHeaderProps) {
         <div
           className={cn(
             'pointer-events-auto mx-auto transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-            scrolled ? 'max-w-[52rem] px-3 pt-3' : 'max-w-7xl px-4 pt-0 md:px-6'
+            homeHeroHeader
+              ? 'max-w-7xl px-4 pt-0 md:px-6'
+              : scrolled
+                ? 'max-w-[52rem] px-3 pt-3'
+                : 'max-w-7xl px-4 pt-0 md:px-6'
           )}
         >
           <nav
             className={cn(
               'flex items-center justify-between gap-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]',
-              scrolled
-                ? 'bg-background/60 ring-border/50 h-12 rounded-2xl pr-1.5 pl-4 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08),0_0_0_0.5px_rgba(0,0,0,0.02)] ring-[0.5px] backdrop-blur-2xl dark:shadow-[0_2px_16px_-6px_rgba(0,0,0,0.4)]'
-                : 'h-16 px-2'
+              homeHeroHeader
+                ? scrolled
+                  ? 'bg-[#101828]/72 ring-[rgba(255,255,255,0.06)] h-14 rounded-2xl border border-white/[0.06] pr-2 pl-5 shadow-[0_12px_32px_-16px_rgba(71,92,255,0.35)] backdrop-blur-xl dark:bg-[#101828]/72'
+                  : 'h-16 px-2'
+                : scrolled
+                  ? 'bg-background/60 ring-border/50 h-12 rounded-2xl pr-1.5 pl-4 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.08),0_0_0_0.5px_rgba(0,0,0,0.02)] ring-[0.5px] backdrop-blur-2xl dark:shadow-[0_2px_16px_-6px_rgba(0,0,0,0.4)]'
+                  : 'h-16 px-2'
             )}
           >
             {/* Logo */}

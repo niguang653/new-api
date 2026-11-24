@@ -52,25 +52,22 @@ function FooterLinkItem(props: { link: FooterLink }) {
   const { t } = useTranslation()
   const isExternal = props.link.href.startsWith('http')
   const label = t(props.link.text)
-
+  const baseCls =
+    'group/link block text-sm transition-[transform,opacity,color] duration-150 will-change-transform text-muted-foreground/70 hover:text-foreground hover:translate-x-0.5'
   if (isExternal) {
     return (
       <a
         href={props.link.href}
         target='_blank'
         rel='noopener noreferrer'
-        className='text-muted-foreground hover:text-foreground text-sm transition-colors duration-200'
+        className={baseCls}
       >
         {label}
       </a>
     )
   }
-
   return (
-    <Link
-      to={props.link.href}
-      className='text-muted-foreground hover:text-foreground text-sm transition-colors duration-200'
-    >
+    <Link to={props.link.href} className={baseCls}>
       {label}
     </Link>
   )
@@ -248,12 +245,24 @@ export function Footer(props: FooterProps) {
 
   return (
     <footer
-      className={cn('border-border/40 relative z-10 border-t', props.className)}
+      className={cn(
+        'relative z-10 overflow-hidden bg-gradient-to-b from-[#101828] to-[#0c1018] dark:from-[#0F1627] dark:to-[#080C16]',
+        props.className
+      )}
     >
-      <div className='mx-auto max-w-6xl px-6 py-12 md:py-16'>
+      {/* 顶部渐变分隔线 */}
+      <div className='pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#475CFF]/50 to-transparent' />
+      {/* 右上品牌光斑 */}
+      <div
+        aria-hidden
+        className='pointer-events-none absolute -top-24 -right-24 size-[360px] rounded-full bg-[#475CFF]/10 blur-[120px]'
+      />
+      <div className='pointer-events-none absolute inset-0 h-40 [background:linear-gradient(to_bottom,rgba(0,0,0,0.18),transparent)]' />
+
+      <div className='relative mx-auto max-w-7xl px-6 py-14 md:py-16'>
         <div className='flex flex-col justify-between gap-10 md:flex-row md:gap-16'>
-          {/* Brand column */}
-          <div className='shrink-0'>
+          {/* Brand column — 占 2 份宽 */}
+          <div className='shrink-0 md:w-2/6'>
             <Link to='/' className='group flex items-center gap-2.5'>
               <img
                 src={displayLogo}
@@ -264,22 +273,22 @@ export function Footer(props: FooterProps) {
                 {displayName}
               </span>
             </Link>
-            <p className='text-muted-foreground/60 mt-3 max-w-[200px] text-xs leading-relaxed'>
+            <p className='text-muted-foreground/50 mt-3 max-w-[220px] text-xs leading-relaxed'>
               {t('Powerful API Management Platform')}
             </p>
           </div>
 
           {/* Links columns */}
           {isDemoSiteMode && (
-            <div className='grid grid-cols-3 gap-8 md:gap-16'>
+            <div className='grid grid-cols-2 gap-8 md:w-4/6 md:grid-cols-3 md:gap-10'>
               {displayColumns.map((column, index) => (
-                <div key={index}>
-                  <p className='text-muted-foreground/50 mb-3 text-xs font-medium tracking-wider uppercase'>
+                <div key={column.title || index}>
+                  <p className='mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/40'>
                     {t(column.title)}
                   </p>
                   <ul className='space-y-2.5'>
                     {column.links.map((link, linkIndex) => (
-                      <li key={linkIndex}>
+                      <li key={link.href || linkIndex}>
                         <FooterLinkItem link={link} />
                       </li>
                     ))}
@@ -290,10 +299,9 @@ export function Footer(props: FooterProps) {
           )}
         </div>
 
-        {/* Copyright + optional legal links inline on the left, project
-            attribution on the right; wraps on narrow screens. */}
-        <div className='border-border/30 mt-12 flex flex-col items-center justify-between gap-x-3 gap-y-2 border-t pt-6 sm:flex-row'>
-          <div className='text-muted-foreground/40 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs sm:justify-start'>
+        {/* Copyright row */}
+        <div className='border-white/[0.06] mt-12 flex flex-col items-center justify-between gap-x-3 gap-y-2 border-t pt-6 sm:flex-row'>
+          <div className='text-muted-foreground/35 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs sm:justify-start'>
             <span>
               &copy; {currentYear} {displayName}.{' '}
               {props.copyright ?? t('footer.defaultCopyright')}

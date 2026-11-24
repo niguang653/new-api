@@ -2976,7 +2976,7 @@
     "footer.columns.related.links.oneApi": "One API",
     "footer.columns.related.title": "Các Dự Án Liên Quan",
     "footer.defaultCopyright": "Bản quyền được bảo lưu.",
-    "footer.new\u0061pi.projectAttributionSuffix": "Bản quyền được bảo lưu. Được thiết kế và phát triển bởi các cộng tác viên dự án.",
+    "footer.newapi.projectAttributionSuffix": "Bản quyền được bảo lưu. Được thiết kế và phát triển bởi các cộng tác viên dự án.",
     "For a stronger password": "Để mật khẩu mạnh hơn",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "Với kênh tùy chỉnh nâng cao, thiết lập này chỉ áp dụng cho các route /v1/responses không chuyển đổi giao thức.",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "Đối với các kênh được thêm sau ngày 10 tháng 5 năm 2025, không cần loại bỏ \".\" khỏi tên mô hình trong quá trình triển khai",
@@ -7781,6 +7781,68 @@
     "Zhipu": "Zhipu",
     "Zhipu GLM": "Zhipu GLM",
     "Zhipu V4": "Zhipu V4",
-    "Zoom": "Zoom"
+    "Zoom": "Zoom",
+    "home": {
+      "notice": {
+        "close": "Đóng thông báo"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "Một API cho mọi mô hình AI",
+        "description": "Gộp GPT, Claude, Gemini và DeepSeek vào một endpoint. Xác thực thống nhất, thanh toán thống nhất, trả tiền theo mức sử dụng.",
+        "primaryCta": "Bắt đầu",
+        "secondaryCta": "Xem mô hình",
+        "stats": {
+          "users": "Đội ngũ và nhà phát triển",
+          "tokens": "Tokens xử lý mỗi ngày",
+          "tokensValue": "100 tỷ+",
+          "models": "Mô hình khả dụng",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "Các nhà cung cấp mô hình hàng đầu, một điểm truy cập"
+      },
+      "chooseUs": {
+        "eyebrow": "Vì sao chọn chúng tôi",
+        "title": "Hạ tầng truy cập mô hình cho lưu lượng production",
+        "cards": {
+          "singleApi": {
+            "title": "API chuẩn thống nhất",
+            "description": "Tương thích OpenAI Chat / Responses, Anthropic Messages và các endpoint bất đồng bộ cho ảnh, video, âm thanh (/v1/predictions) — một khóa, một SDK."
+          },
+          "security": {
+            "title": "Cô lập khóa và kiểm soát quyền",
+            "description": "Đặt hạn mức, thời hạn và nhóm được phép cho từng khóa. Toàn bộ đường truyền được mã hóa và lưu log đầy đủ theo request_id."
+          },
+          "globalEdge": {
+            "title": "Định tuyến tăng tốc đa nút",
+            "description": "Chuyển tiếp yêu cầu qua các nút nhiều vùng để giảm jitter và độ trễ token đầu tiên, giữ luồng ổn định."
+          },
+          "latency": {
+            "title": "Tính phí minh bạch và thanh toán doanh nghiệp",
+            "description": "Đo lường theo mô hình, nhóm và từng lượt gọi. Nạp tiền trực tuyến hoặc chuyển khoản doanh nghiệp kèm hợp đồng và hóa đơn VAT."
+          },
+          "failover": {
+            "title": "Tự động chuyển tuyến đa kênh",
+            "description": "Gắn nhiều kênh thượng nguồn sau một mô hình; khi tuyến chính suy giảm, lưu lượng tự động chuyển sang tuyến dự phòng."
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "TƯƠNG THÍCH OPENAI",
+          "models": "200+ MÔ HÌNH",
+          "failover": "FAILOVER THÔNG MINH",
+          "metered": "TÍNH PHÍ THEO TOKEN"
+        },
+        "descriptions": {
+          "openaiCompat": "Một endpoint cho mọi nguồn",
+          "models": "Văn bản · Hình ảnh · Video · Âm thanh",
+          "failover": "Tự chuyển, không gián đoạn",
+          "metered": "Chi tiết, có log kiểm tra"
+        }
+      }
+    }
   }
 }

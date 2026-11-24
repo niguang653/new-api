@@ -2976,7 +2976,7 @@
     "footer.columns.related.links.oneApi": "1つのAPI",
     "footer.columns.related.title": "関連プロジェクト",
     "footer.defaultCopyright": "すべての権利を留保します。",
-    "footer.new\u0061pi.projectAttributionSuffix": "すべての権利を留保します。プロジェクトコントリビューターにより設計・開発されています。",
+    "footer.newapi.projectAttributionSuffix": "すべての権利を留保します。プロジェクトコントリビューターにより設計・開発されています。",
     "For a stronger password": "より強いパスワードにするには",
     "For advanced custom channels this applies only to /v1/responses routes without protocol conversion.": "高度なカスタムチャネルでは、プロトコル変換を行わない /v1/responses ルートにのみ適用されます。",
     "For channels added after May 10, 2025, no need to remove \".\" from model names during deployment": "2025 年 5 月 10 日以降に追加されたチャネルの場合、デプロイ時にモデル名から「.」を削除する必要はありません",
@@ -7781,6 +7781,68 @@
     "Zhipu": "Zhipu",
     "Zhipu GLM": "Zhipu GLM",
     "Zhipu V4": "Zhipu V 4",
-    "Zoom": "ズーム"
+    "Zoom": "ズーム",
+    "home": {
+      "notice": {
+        "close": "お知らせを閉じる"
+      },
+      "banner": {
+        "eyebrow": "UNIFIED AI GATEWAY · OPENAI-COMPATIBLE ENDPOINT",
+        "title": "すべての AI モデルを 1 つの API で",
+        "description": "GPT、Claude、Gemini、DeepSeek を単一エンドポイントに。統一認証、統一課金、使った分だけお支払い。",
+        "primaryCta": "始める",
+        "secondaryCta": "モデル一覧",
+        "stats": {
+          "users": "導入チームと開発者",
+          "tokens": "1 日あたり処理 Tokens",
+          "tokensValue": "1000 億+",
+          "models": "接続モデル数",
+          "modelsValue": "200+"
+        }
+      },
+      "logos": {
+        "caption": "主要モデルプロバイダーを 1 つのエンドポイントに"
+      },
+      "chooseUs": {
+        "eyebrow": "選ばれる理由",
+        "title": "本番トラフィックに耐えるモデル接続基盤",
+        "cards": {
+          "singleApi": {
+            "title": "統一標準 API",
+            "description": "OpenAI Chat / Responses、Anthropic Messages、画像・動画・音声の非同期ジョブ API（/v1/predictions）に対応。キーも SDK も 1 つで済みます。"
+          },
+          "security": {
+            "title": "キー分離と権限制御",
+            "description": "キーごとに上限額・有効期限・利用グループを設定可能。通信は暗号化され、request_id 単位の完全な呼び出しログを保持します。"
+          },
+          "globalEdge": {
+            "title": "マルチノード高速ルーティング",
+            "description": "複数リージョンの入口ノードを経由して転送し、網間のゆらぎと初回トークン遅延を低減します。"
+          },
+          "latency": {
+            "title": "明確な課金と企業決済",
+            "description": "モデル・グループ・実呼び出し単位で計測。オンライン入金に加え、法人振込・契約・請求書発行にも対応します。"
+          },
+          "failover": {
+            "title": "マルチ回線の自動フェイルオーバー",
+            "description": "1 つのモデルに複数の上流チャネルを紐付け、主回線の劣化時は自動でバックアップへ切り替えます。"
+          }
+        }
+      },
+      "stats": {
+        "titles": {
+          "openaiCompat": "OPENAI 互換",
+          "models": "200+ モデル",
+          "failover": "自動フェイルオーバー",
+          "metered": "Token 単位課金"
+        },
+        "descriptions": {
+          "openaiCompat": "あらゆる上流を 1 つのインターフェースで",
+          "models": "テキスト · 画像 · 動画 · 音声",
+          "failover": "自動切替、ゼロ停止",
+          "metered": "精細 · 監査可能なログ"
+        }
+      }
+    }
   }
 }
